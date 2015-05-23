@@ -8,16 +8,17 @@ public class MyPanel extends JPanel {
     private static final String FIRE2 = "player2 fire";
     int x = 100;
     int y = 100;
+    double dx =0, dy =0;
     static JLabel obj1 = new JLabel("Welcome to MARIO");
     
     private static ImageIcon ii = new ImageIcon("Mario.png");
     public MyPanel() {
        // ii = new ImageIcon("Mario.png");
-        setPreferredSize(new Dimension(400,400));
+        setPreferredSize(new Dimension(800,300));
         
         this.add(obj1);
         //this.setBounds(20,20,200,200);
-
+        dx -= .1;
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("LEFT"), FIRE);
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), FIRE2);
         this.getActionMap().put(FIRE, new FireAction(1));
@@ -62,8 +63,8 @@ public class MyPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-            x -= 1;
+            dx += .2;
+            x -= (int)dx;
             //System.out.println(x);   
             repaint();
         }
@@ -78,7 +79,8 @@ public class MyPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {       
-            x += 1;
+            dx += .2;
+            x += (int)dx;
             //System.out.println(x);  
             repaint();
         }
