@@ -10,15 +10,14 @@ import java.awt.*;
 public class MyGameRunner
 {
     // instance variables - replace the example below with your own
-  public static void main(String[]args)
-  {
-      JFrame frame = new JFrame("Mario");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       Container c = frame.getContentPane();
+    public static void main(String[]args)
+    {
+        JFrame frame = new JFrame("Mario");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = frame.getContentPane();
         c.setLayout(new FlowLayout());
         c.add(new MyPanel());
         frame.pack();
         frame.setVisible(true);
-      
     }
 }
