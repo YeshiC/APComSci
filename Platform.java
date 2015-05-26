@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Write a description of class Platform here.
  * 
@@ -8,19 +8,43 @@
 public class Platform
 {
     // instance variables - replace the example below with your own
-    int platX1,platY1,platX2,platY2;
-    int xPos,yPos;
-    public Platform(int x1, int y1,int x2, int y2)
+   
+    int platX1,platY1,h,w;
+    
+    public Platform(int x1, int y1,int h1, int w1)
     {
         platX1 = x1;
         platY1 = y1;
-        platX2 = x2;
-        platY2 = y2;
+        h = h1;
+        w = w1;
+    }
+    static ArrayList<Platform> cords = new ArrayList<>();
+    public void makePlatforms()
+    {
+        Platform first = new Platform(0,200,20,400);
+        cords.add(first);
     }
     
-    public boolean collisionD(int x, int y, ArrayList platfroms)
+    public int returnX()
+    {
+    return platX1;
+    }
+    public int returnY()
+    {
+    return platY1;
+    }
+    public int returnH()
+    {
+    return h;
+    }
+    public int returnW()
+    {
+    return w;
+    }
+    
+    public static ArrayList<Platform> returnCordinates()
     {
         
+        return cords;
     }
-    //make collsion, platforms, and paint them in the other method
 }

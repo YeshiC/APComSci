@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.Color;
+import java.util.ArrayList;
 public class MyPanel extends JPanel {
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
     //Controls for Horizantal Movement
@@ -24,15 +25,20 @@ public class MyPanel extends JPanel {
     static JLabel obj1 = new JLabel("Welcome to MARIO");
     Color backG = Color.BLACK;
     private static ImageIcon ii = new ImageIcon("Mario.png");
+   
     public MyPanel() {
         //sets background and dimensoins
         setPreferredSize(new Dimension(width,height));
         setBackground(backG);
         this.add(obj1);
-       
-        if(x!= 0 && x != width)
-        dx -= .1;
-        
+      
+         Platform temp = Platfrom.returnCordinates();
+        for(int ctr = 0; ctr < temp.size(); ctr ++)
+        {
+            g.drawRect(temp.returnX(),temp.returnY(),temp.returnH(),temp.returnW());
+        }
+        if(x!= 0 && x != width && dx < 7)
+        dx -= .1;        
         //Input Maps
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("LEFT"), FIRE);
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), FIRE2);
@@ -42,19 +48,18 @@ public class MyPanel extends JPanel {
         this.getActionMap().put(FIRE2, new FireAction2(1));
         this.getActionMap().put(RELEASED, new ReleaseAction(1));
         this.getActionMap().put(RELEASED2, new ReleaseAction2(1));
-        
-
     }
     
     @Override
     //Paints the sprite
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+       
         ii.paintIcon(this,g,x,y); 
         // g.dispose();
     }
-
+    
+    
     public int getY()
     {
         return y;
@@ -75,22 +80,22 @@ public class MyPanel extends JPanel {
         FireAction(int player) {
             this.player = player;
         }
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            dx += .2;
+            dx -= .2;
             if(reverse == true)
             {
                 dx = 0;
                 reverse = false;
+                dx = -3;
+                
             }
              if(x <= 0)
             {
                 dx =0;
                 x = 0;
             }
-            x -= (int)dx;
-
+            x += (int)dx;
             repaint();
         }
     }
@@ -106,6 +111,7 @@ public class MyPanel extends JPanel {
             {
                 dx = 0;
                 reverse = true;
+                dx = 3;
             }
             if(x >= width)
             {

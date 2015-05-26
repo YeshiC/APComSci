@@ -1,4 +1,16 @@
 #BlueJ class context
-comment0.params=
-comment0.target=Platform()
-numComments=1
+comment0.params=x1\ y1\ h1\ w1
+comment0.target=Platform(int,\ int,\ int,\ int)
+comment1.params=
+comment1.target=void\ makePlatforms()
+comment2.params=
+comment2.target=int\ returnX()
+comment3.params=
+comment3.target=int\ returnY()
+comment4.params=
+comment4.target=int\ returnH()
+comment5.params=
+comment5.target=int\ returnW()
+comment6.params=
+comment6.target=java.util.ArrayList\ returnCordinates()
+numComments=7
