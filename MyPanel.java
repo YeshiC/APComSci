@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.awt.Image;
 public class MyPanel extends JPanel {
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
     //Controls for Horizantal Movement
@@ -25,17 +26,24 @@ public class MyPanel extends JPanel {
     static JLabel obj1 = new JLabel("Welcome to MARIO");
     Color backG = Color.BLACK;
     private static ImageIcon ii = new ImageIcon("Mario.png");
-   
+    int imageH = ii.getIconHeight();
+    int imageW = ii.getIconWidth();
+    
+    Platform stuff;
+    ArrayList temp = stuff.returnCordinates();
     public MyPanel() {
         //sets background and dimensoins
         setPreferredSize(new Dimension(width,height));
         setBackground(backG);
         this.add(obj1);
       
-         Platform temp = Platfrom.returnCordinates();
+        
         for(int ctr = 0; ctr < temp.size(); ctr ++)
         {
-            g.drawRect(temp.returnX(),temp.returnY(),temp.returnH(),temp.returnW());
+            g.drawRect(temp.get(ctr).Platform.returnX(),
+                       temp.get(ctr).returnY(),
+                       temp.get(ctr).returnH(),
+                       temp.get(ctr).returnW());
         }
         if(x!= 0 && x != width && dx < 7)
         dx -= .1;        
