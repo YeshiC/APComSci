@@ -18,8 +18,10 @@ public class MyGameRunner
         JFrame frame = new JFrame("Mario");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container c = frame.getContentPane();
-        c.setLayout(new FlowLayout());
+        c.setBackground(Color.pink);
+        //c.setLayout(null);
         c.add(new MyPanel());
+        
         frame.pack();
         frame.setVisible(true);
     }

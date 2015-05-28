@@ -23,6 +23,8 @@ public class Platform
     {
         Platform first = new Platform(0,200,20,400);
         cords.add(first);
+        Platform second = new Platform(700,0,300,300);
+        cords.add(second);
     }
     
     public int returnX()
