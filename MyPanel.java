@@ -10,7 +10,7 @@ public class MyPanel extends JPanel {
     private static final String FIRE = "player fire";
     private static final String FIRE2 = "player2 fire";
     private static final String FIRE3 = "player3 fire";
-    private static final String RELEASED = "player3 fire";
+    private static final String RELEASED = "player4 fire";
     private static final String RELEASED2 = "player4 fire";
     //Cordinates
     int x = 100;
@@ -37,11 +37,8 @@ public class MyPanel extends JPanel {
         temp = stuff.returnCordinates();
         setPreferredSize(new Dimension(width,height));
         setBackground(backG);
-        //this.add(obj1);
-        dy -= .2;
-        y += dy;
-        
-        repaint();
+
+    
         if(x!= 0 && x != width && dx < 7)
             dx -= .1;        
         //Input Maps
@@ -49,7 +46,7 @@ public class MyPanel extends JPanel {
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), FIRE2);
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("UP"), FIRE3);
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("released LEFT"), RELEASED);
-        this.getInputMap(IFW).put(KeyStroke.getKeyStroke("released LEFT"), RELEASED2);
+        this.getInputMap(IFW).put(KeyStroke.getKeyStroke("released RIGHT"), RELEASED2);
         this.getActionMap().put(FIRE, new FireAction(1));
         this.getActionMap().put(FIRE2, new FireAction2(1));
         this.getActionMap().put(FIRE3, new FireAction3(1));
@@ -73,12 +70,12 @@ public class MyPanel extends JPanel {
         // g.dispose();
     }
 
-    public int getY()
+    public int getCordsY()
     {
         return y;
     }
 
-    public int getX()
+    public int getCordsX()
     {
         return x;
     }
@@ -107,15 +104,23 @@ public class MyPanel extends JPanel {
                 dx = 0;
         }
     }
-    
+
     public void collisionDetectionU()
     {
         for(int ctr = 0; ctr< temp.size(); ctr ++)
         {
-            if(((temp.get(ctr).returnY() + temp.get(ctr).returnH()) == y 
-            || (temp.get(ctr).returnY() == y)) 
+            if((
+                (temp.get(ctr).returnY() == y + imageH)) 
             && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
-            || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
+                || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
+            {   
+                dy = 0;
+                hasJumped = false;
+            }   
+            if(((temp.get(ctr).returnY() + temp.get(ctr).returnH()) == y 
+            ) 
+            && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
+                || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
                 dy = 0;
         }
     }
@@ -181,14 +186,18 @@ public class MyPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            y -= 1;
             if(hasJumped == false)
             {
                 hasJumped = true;
                 dy = 10;
             }
-
+          
+            collisionDetectionU();
+            y -= (int)dy;
+            repaint();
         }
+
     }
 
     //Accelration Reset
