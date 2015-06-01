@@ -58,7 +58,7 @@ public class MyPanel extends JPanel {
         cords.add(first);
         Platform second = new Platform(700,0,300,300);
         cords.add(second);
-        Platform thrid = new Platform(0,200,700,50);
+        Platform thrid = new Platform(0,220,700,25);
         cords.add(thrid);
         temp = cords;
     }
@@ -91,21 +91,21 @@ public class MyPanel extends JPanel {
 
     public void printIt()
     {
-        
-              if(y<200-imageH){
+
+        if(y<200){
             dy += 1;
-     
+
         }
-        if(y>200 - imageH && dy > 1){
-                dy = 0;
-                
-            }
-        
+        if(y>200 && dy > 1){
+            dy = 0;
+
+        }
+
         if(dx >0)
             dx-=.15;
         if(dx<0)
             dx+=.15;
-        
+
         x+=dx;
         y+=dy;
         collisionDetectionF();
@@ -125,41 +125,62 @@ public class MyPanel extends JPanel {
     {
         for(int ctr = 0; ctr< temp.size(); ctr ++)
         {
-            if((temp.get(ctr).returnX() + temp.get(ctr).returnW()) == x 
-            && ( y > temp.get(ctr).returnY() && y < (temp.get(ctr).returnY() + temp.get(ctr).returnH())))
-                dx = 0;
-        }
+            if((temp.get(ctr).returnY()< y 
+                && x > temp.get(ctr).returnH()+ temp.get(ctr).returnY())
+            ||(temp.get(ctr).returnY()< y + imageH 
+                && x + imageH  > temp.get(ctr).returnH()+ temp.get(ctr).returnY())){
+
+                if(dx< temp.get(ctr).returnX() + temp.get(ctr).returnW() - x)
+                    dx = temp.get(ctr).returnX() + temp.get(ctr).returnW() - x;
+
+            }}
     }
 
     public void collisionDetectionB()
     {
         for(int ctr = 0; ctr< temp.size(); ctr ++)
         {
-            if((temp.get(ctr).returnX()) == x 
-            && ( y > temp.get(ctr).returnY() && y < (temp.get(ctr).returnY() + temp.get(ctr).returnH())))
-                dx = 0;
+            if((temp.get(ctr).returnY()< y 
+                && x > temp.get(ctr).returnH()+ temp.get(ctr).returnY())
+            ||(temp.get(ctr).returnY()< y + imageH 
+                && x + imageH  > temp.get(ctr).returnH()+ temp.get(ctr).returnY()))
+                if(dx > temp.get(ctr).returnX() - x)
+                    dx = temp.get(ctr).returnX()  - x;
         }
     }
 
-//     public void collisionDetectionU()
-//     {
-//         for(int ctr = 0; ctr< temp.size(); ctr ++)
-//         {
-//             if((
-//                 (temp.get(ctr).returnY() == y + imageH)) 
-//             && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
-//                 || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
-//             {   
-//                 dy = 0;
-//                 hasJumped = false;
-//             }   
-// //             if(((temp.get(ctr).returnY() + temp.get(ctr).returnH()) == y 
-// //             ) 
-// //             && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
-// //                 || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
-// //                 dy = 0;
-//         }
-//     }
+    //     public void collisionDetectionU()
+    //     {
+    //         for(int ctr = 0; ctr< temp.size(); ctr ++)
+    //         {
+    //             if((
+    //                 (temp.get(ctr).returnY() == y + imageH)) 
+    //             && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
+    //                 || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
+    //             {   
+    //                 dy = 0;
+    //                 hasJumped = false;
+    //             }   
+    // //             if(((temp.get(ctr).returnY() + temp.get(ctr).returnH()) == y 
+    // //             ) 
+    // //             && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
+    // //                 || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
+    // //                 dy = 0;
+    //         }
+    //     }
+
+    public void collisionDetectionU()
+    {
+        for(int ctr = 0; ctr< temp.size(); ctr ++)
+        {
+            if((temp.get(ctr).returnX()< x 
+                && x > temp.get(ctr).returnH()+ temp.get(ctr).returnY())
+            ||(temp.get(ctr).returnX()< x + imageH 
+                && x + imageH  > temp.get(ctr).returnH()+ temp.get(ctr).returnY()))
+                if(dy > temp.get(ctr).returnY() - y)
+                    dy = temp.get(ctr).returnY() - y;
+        }
+    }
 
     //Actions for button pressed
     private class FireAction2 extends AbstractAction {
@@ -204,7 +225,7 @@ public class MyPanel extends JPanel {
             }
             if(y > 200)
                 hasJumped = false;
-         
+
             printIt();
         }
 
