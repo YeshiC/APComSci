@@ -18,14 +18,14 @@ public class Platform
         h = h1;
         w = w1;
     }
-    static ArrayList<Platform> cords = new ArrayList<>();
-    public void makePlatforms()
-    {
-        Platform first = new Platform(0,200,20,400);
-        cords.add(first);
-        Platform second = new Platform(700,0,300,300);
-        cords.add(second);
-    }
+//     static ArrayList<Platform> cords = new ArrayList<>();
+//     public void makePlatforms()
+//     {
+//         Platform first = new Platform(0,200,20,400);
+//         cords.add(first);
+//         Platform second = new Platform(700,0,300,300);
+//         cords.add(second);
+//     }
     
     public int returnX()
     {
@@ -44,9 +44,9 @@ public class Platform
     return w;
     }
     
-    public static ArrayList<Platform> returnCordinates()
-    {
-        
-        return cords;
-    }
+//     public static ArrayList<Platform> returnCordinates()
+//     {
+//         
+//         return cords;
+//     }
 }

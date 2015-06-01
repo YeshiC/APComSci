@@ -34,13 +34,10 @@ public class MyPanel extends JPanel {
     ArrayList<Platform> temp ;
     public MyPanel() {
         //sets background and dimensoins
-        temp = stuff.returnCordinates();
+        //temp = stuff.returnCordinates();
         setPreferredSize(new Dimension(width,height));
         setBackground(backG);
-
-    
-        if(x!= 0 && x != width && dx < 7)
-            dx -= .1;        
+        makePlatforms();
         //Input Maps
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("LEFT"), FIRE);
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), FIRE2);
@@ -54,6 +51,18 @@ public class MyPanel extends JPanel {
         this.getActionMap().put(RELEASED2, new ReleaseAction2(1));
     }
 
+    ArrayList<Platform> cords = new ArrayList<>();
+    public void makePlatforms()
+    {
+        Platform first = new Platform(0,200,20,400);
+        cords.add(first);
+        Platform second = new Platform(700,0,300,300);
+        cords.add(second);
+        Platform thrid = new Platform(0,200,700,50);
+        cords.add(thrid);
+        temp = cords;
+    }
+
     @Override
     //Paints the sprite
     public void paintComponent(Graphics g) {
@@ -61,7 +70,7 @@ public class MyPanel extends JPanel {
         for(int ctr = 0; ctr < temp.size(); ctr ++)
         {
             g.setColor(Color.WHITE);
-            g.drawRect(temp.get(ctr).returnX(),
+            g.fillRect(temp.get(ctr).returnX(),
                 temp.get(ctr).returnY(),
                 temp.get(ctr).returnH(),
                 temp.get(ctr).returnW());
@@ -78,6 +87,33 @@ public class MyPanel extends JPanel {
     public int getCordsX()
     {
         return x;
+    }
+
+    public void printIt()
+    {
+        
+              if(y<200-imageH){
+            dy += 1;
+     
+        }
+        if(y>200 - imageH && dy > 1){
+                dy = 0;
+                
+            }
+        
+        if(dx >0)
+            dx-=.15;
+        if(dx<0)
+            dx+=.15;
+        
+        x+=dx;
+        y+=dy;
+        collisionDetectionF();
+        collisionDetectionB();
+        //collisionDetectionU();
+        System.out.println(x);
+        repaint();
+
     }
 
     //CONTOLS MOVEMENT------------------------------------------------------------------
@@ -105,25 +141,25 @@ public class MyPanel extends JPanel {
         }
     }
 
-    public void collisionDetectionU()
-    {
-        for(int ctr = 0; ctr< temp.size(); ctr ++)
-        {
-            if((
-                (temp.get(ctr).returnY() == y + imageH)) 
-            && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
-                || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
-            {   
-                dy = 0;
-                hasJumped = false;
-            }   
-            if(((temp.get(ctr).returnY() + temp.get(ctr).returnH()) == y 
-            ) 
-            && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
-                || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
-                dy = 0;
-        }
-    }
+//     public void collisionDetectionU()
+//     {
+//         for(int ctr = 0; ctr< temp.size(); ctr ++)
+//         {
+//             if((
+//                 (temp.get(ctr).returnY() == y + imageH)) 
+//             && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
+//                 || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
+//             {   
+//                 dy = 0;
+//                 hasJumped = false;
+//             }   
+// //             if(((temp.get(ctr).returnY() + temp.get(ctr).returnH()) == y 
+// //             ) 
+// //             && ( (x <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x >= temp.get(ctr).returnX() )
+// //                 || (x + imageW <= (temp.get(ctr).returnX() + temp.get(ctr).returnW()) && x + imageW >= temp.get(ctr).returnX() )))
+// //                 dy = 0;
+//         }
+//     }
 
     //Actions for button pressed
     private class FireAction2 extends AbstractAction {
@@ -134,22 +170,9 @@ public class MyPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {       
-            dx += .2;
-            if(reverse == false)
-            {
-                dx = 0;
-                reverse = true;
-                dx = 3;
-            }
-            if(x >= width)
-            {
-                dx = 0;
-                x = width;
-            }
-            collisionDetectionF();
-            x += (int)dx;
-
-            repaint();
+            if(dx<10)
+                dx += 1;
+            printIt();
         }
     }
     private class FireAction extends AbstractAction {
@@ -160,22 +183,9 @@ public class MyPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            dx -= .2;
-            if(reverse == true)
-            {
-                dx = 0;
-                reverse = false;
-                dx = -3;
-
-            }
-            if(x <= 0)
-            {
-                dx =0;
-                x = 0;
-            }
-            collisionDetectionB();
-            x += (int)dx;
-            repaint();
+            if(dx>-10)
+                dx -= 1;
+            printIt();
         }
     }
     private class FireAction3 extends AbstractAction {
@@ -186,16 +196,16 @@ public class MyPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            y -= 1;
+
             if(hasJumped == false)
             {
                 hasJumped = true;
-                dy = 10;
+                dy = -10;
             }
-          
-            collisionDetectionU();
-            y -= (int)dy;
-            repaint();
+            if(y > 200)
+                hasJumped = false;
+         
+            printIt();
         }
 
     }

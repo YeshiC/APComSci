@@ -1,16 +1,18 @@
 #BlueJ class context
 comment0.params=
 comment0.target=MyPanel()
-comment1.params=g
-comment1.target=void\ paintComponent(java.awt.Graphics)
-comment2.params=
-comment2.target=int\ getCordsY()
+comment1.params=
+comment1.target=void\ makePlatforms()
+comment2.params=g
+comment2.target=void\ paintComponent(java.awt.Graphics)
 comment3.params=
-comment3.target=int\ getCordsX()
+comment3.target=int\ getCordsY()
 comment4.params=
-comment4.target=void\ collisionDetectionF()
+comment4.target=int\ getCordsX()
 comment5.params=
-comment5.target=void\ collisionDetectionB()
+comment5.target=void\ printIt()
 comment6.params=
-comment6.target=void\ collisionDetectionU()
-numComments=7
+comment6.target=void\ collisionDetectionF()
+comment7.params=
+comment7.target=void\ collisionDetectionB()
+numComments=8
