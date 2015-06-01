@@ -17,7 +17,7 @@ public class MyPanel extends JPanel {
     int y = 100;
     double dx =0, dy =0;
     //Dimensions for the frame
-    int width = 1000;
+    int width = 2000;
     int height = 300;
 
     //Check to reset accelration
@@ -30,6 +30,7 @@ public class MyPanel extends JPanel {
     int imageH = ii.getIconHeight();
     int imageW = ii.getIconWidth();
     boolean hasJumped = false;
+    boolean dead = false;
     Platform stuff;
     ArrayList<Platform> temp ;
     public MyPanel() {
@@ -38,6 +39,7 @@ public class MyPanel extends JPanel {
         setPreferredSize(new Dimension(width,height));
         setBackground(backG);
         makePlatforms();
+        makeSpikes();
         //Input Maps
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("LEFT"), FIRE);
         this.getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), FIRE2);
@@ -54,18 +56,36 @@ public class MyPanel extends JPanel {
     ArrayList<Platform> cords = new ArrayList<>();
     public void makePlatforms()
     {
-        Platform first = new Platform(0,200,20,400);
+        Platform first = new Platform(0,220,2000,25);
         cords.add(first);
-        Platform second = new Platform(700,0,300,300);
-        cords.add(second);
-        Platform thrid = new Platform(0,220,700,25);
+       
+        Platform thrid = new Platform(10,10,10,10);
         cords.add(thrid);
-        temp = cords;
+       temp = cords;
     }
+    
+    ArrayList<Platform> spikes = new ArrayList<>();
+    public void makeSpikes()
+    {
+        Platform one = new Platform(500,220,200,25);
+        spikes.add(one);
+       
+        Platform two = new Platform(200,220,100,25);
+        spikes.add(two);
+        
+        Platform three = new Platform(700,220,150,25);
+        spikes.add(three);
+       
+    }
+    
+    
 
     @Override
     //Paints the sprite
     public void paintComponent(Graphics g) {
+        
+        
+        
         super.paintComponent(g);
         for(int ctr = 0; ctr < temp.size(); ctr ++)
         {
@@ -75,8 +95,31 @@ public class MyPanel extends JPanel {
                 temp.get(ctr).returnH(),
                 temp.get(ctr).returnW());
         }
+        for(int ctr = 0; ctr < spikes.size(); ctr ++)
+        {
+            g.setColor(Color.RED);
+            g.fillRect(spikes.get(ctr).returnX(),
+                spikes.get(ctr).returnY(),
+                spikes.get(ctr).returnH(),
+                spikes.get(ctr).returnW());
+        }
         ii.paintIcon(this,g,x,y); 
-        // g.dispose();
+        if(x == 1900 && (y == 205 || y == 201))
+        {
+            
+            g.setColor(Color.GREEN);
+            g.fillRect(0,0,2000,300);
+            g.setColor(Color.WHITE);
+            g.drawString("You WIN!", 2000, 300);
+        }
+        if(dead == true)
+        {
+            g.setColor(Color.RED);
+            g.fillRect(0,0,2000,300);
+            g.setColor(Color.WHITE);
+            g.drawString("You Ded", 2000, 300);
+        }
+        System.out.print(y);
     }
 
     public int getCordsY()
@@ -89,6 +132,8 @@ public class MyPanel extends JPanel {
         return x;
     }
 
+  
+    
     public void printIt()
     {
 
@@ -108,11 +153,21 @@ public class MyPanel extends JPanel {
 
         x+=dx;
         y+=dy;
-        collisionDetectionF();
-        collisionDetectionB();
+        //collisionDetectionF();
+        //collisionDetectionB();
         //collisionDetectionU();
-        System.out.println(x);
+        System.out.println(y);
         repaint();
+        
+        for(int ctr = 0; ctr < spikes.size(); ctr ++)
+        {
+            if(((spikes.get(ctr).returnX() < x && spikes.get(ctr).returnX() + spikes.get(ctr).returnW() > x) && (y == 205||y == 201)))
+            {
+                dead = true;
+            }
+            if((spikes.get(ctr).returnX() < x + imageW && spikes.get(ctr).returnX() + spikes.get(ctr).returnW() > x + imageW) && (y == 205 || y == 201))
+                 dead = true;
+        }
 
     }
 
